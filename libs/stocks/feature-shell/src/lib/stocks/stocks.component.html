@@ -17,17 +17,38 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
-      <mat-option
-        *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
-      >
-        {{ timePeriod.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <!--<mat-form-field>-->
+    <!--<mat-label>Favorite time period</mat-label>-->
+    <!--<mat-select formControlName="period">-->
+      <!--<mat-option-->
+        <!--*ngFor="let timePeriod of timePeriods"-->
+        <!--[value]="timePeriod.value"-->
+      <!--&gt;-->
+        <!--{{ timePeriod.viewValue }}-->
+      <!--</mat-option>-->
+    <!--</mat-select>-->
+  <!--</mat-form-field>-->
+  <div formGroupName="dateRange">
+    <mat-form-field>
+      <input matInput [max]="today" formControlName="startDate" [matDatepicker] = "startDate" placeholder = "Choose start date">
+      <mat-datepicker-toggle matSuffix [for] = "startDate"></mat-datepicker-toggle>
+      <mat-datepicker #startDate></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [max]="today" formControlName="endDate" [matDatepicker] = "endDate" placeholder = "Choose end date">
+      <mat-datepicker-toggle matSuffix [for] = "endDate"></mat-datepicker-toggle>
+      <mat-datepicker #endDate></mat-datepicker>
+    </mat-form-field>
+    <mat-error>
+      <span *ngIf="
+          !stockPickerForm.get('dateRange').valid &&
+          stockPickerForm.get('dateRange').touched
+        ">
+        Please choose a correct date range
+      </span>
+    </mat-error>
+  </div>
 
   <button (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>
